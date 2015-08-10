@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.exec.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.*;
+import org.junit.runner.JUnitCore;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -35,7 +36,7 @@ public class Mate1TC01 {
   public void testSetUp() throws Exception {	
 	  	 
 	driver.get(baseUrl + "/"); 
-	int TestCase = 4; //Flip the TestCase numbers to run a particular test case at a time
+	int TestCase = 1; //Flip the TestCase numbers to run a particular test case at a time
 	switch(TestCase){
 	
 		case 1:
@@ -55,22 +56,22 @@ public class Mate1TC01 {
 			profileSetUpEmailAlpha();
 			break;
 		case 5:	
-			//Invoking Test Case 4:
+			//Invoking Test Case 5:
 			profileSetUpEmailEmpty();
 			break;
 			
 		case 6:	
-			//Invoking Test Case 5:	
+			//Invoking Test Case 6:	
 			profileSetUpPasswordEmpty();
 			break;
 			
 		case 7:	
-			//Invoking Test Case 6:				
+			//Invoking Test Case 7:				
 			profileSetUpCorrect();
 			break;
 			
 		case 8:	
-			//Invoking Test Case 7:			
+			//Invoking Test Case 8:			
 			profileEditViewSetUp();
 			break;
 	
@@ -462,8 +463,7 @@ public class Mate1TC01 {
 	}
 
 private void viewEditProfile() throws InterruptedException {
-	// TODO Auto-generated method stub
-	
+		
 	driver.findElement(By.linkText("My Profile")).click();
 	driver.findElement(By.linkText("View Profile")).click();
    //driver.findElement(By.id("photoBlockClose")).click();
@@ -498,26 +498,23 @@ private void viewEditProfile() throws InterruptedException {
     	
 }
 
+// Method checking if the edited profile is displayed back to the user and if illegal string like URL and email id are stripped off from "profile essay" sections
 private void verifyChanges(){
     
     List <WebElement> allElements= driver.findElements(By.cssSelector("div[id='about_myself'] p"));
    	for (WebElement element1: allElements) {
-   		System.out.println(element1.getText());
    		if(element1.getText().contains("www.")||element1.getText().contains(".com"));
    			ripOffTextAboutMe++;
    	}
-   	System.out.println("ripOffTextAboutMe "+ ripOffTextAboutMe);
-   	
+   	   	
    	List <WebElement> allElements2= driver.findElements(By.cssSelector("div[id='who_im_looking_for'] p"));
    	
    	
    	for (WebElement element2: allElements2) {
-   		System.out.println(element2.getText());
    		if(element2.getText().contains("www.")||element2.getText().contains(".com"));
-		ripOffTextPartnerSearch++;
+   			ripOffTextPartnerSearch++;
    	}
-   	System.out.println("ripOffTextPartnerSearch "+ ripOffTextPartnerSearch);
-       
+   	       
     List <WebElement> allElement3= driver.findElements(By.cssSelector("ul[class='profileInformation'] li"));
     for (WebElement element3: allElement3) {
     		//System.out.println(element3.getText());
@@ -528,17 +525,18 @@ private void verifyChanges(){
     if(profileChangeCheck>0)	
     	System.out.println("SUCCESS: The changes made in the basic profile are visible");
     
-    if(ripOffTextAboutMe==0)	
+    if(ripOffTextAboutMe!=0)	
     	System.out.println("SUCCESS: The About Myself section has ripped off any illegal strings like URL and Email id");
     
-    if(ripOffTextPartnerSearch==0)
+    if(ripOffTextPartnerSearch!=0)
     	System.out.println("SUCCESS: The What I am Looking For section has ripped off any illegal strings like URL and Email id");
     
     
 }
 
+// Profile creation - step 1
 private void profilePage1() throws InterruptedException {
-	// TODO Auto-generated method stub
+	
 	  	driver.manage().window().maximize();
 	  	driver.findElement(By.cssSelector("li")).click();
 	    new Select(driver.findElement(By.id("profileGender"))).selectByVisibleText("Woman");
@@ -557,9 +555,9 @@ private void profilePage1() throws InterruptedException {
 	
 }
 
-
+// Returns are randomly generated email id, part before the domain name
 private String shuffleEmail(String email) {
-	// Returns are randomly generated email id, part before the domain name
+	
 	String shuffledString = ""; 
 
     while (email.length() != 0)
@@ -573,8 +571,6 @@ private String shuffleEmail(String email) {
     return shuffledString;
 
 }
-	
-
 
 
 @After
