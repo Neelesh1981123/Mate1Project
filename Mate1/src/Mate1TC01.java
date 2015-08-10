@@ -35,7 +35,7 @@ public class Mate1TC01 {
   public void testSetUp() throws Exception {	
 	  	 
 	driver.get(baseUrl + "/"); 
-	int TestCase = 7;
+	int TestCase = 4; //Flip the TestCase numbers to run a particular test case at a time
 	switch(TestCase){
 	
 		case 1:
@@ -50,22 +50,26 @@ public class Mate1TC01 {
 			//Invoking Test Case 3:
 			profileSetUpEmailIllegal();
 			break;
-		case 4:	
+		case 4:
+			//Invoking Test Case 4;	
+			profileSetUpEmailAlpha();
+			break;
+		case 5:	
 			//Invoking Test Case 4:
 			profileSetUpEmailEmpty();
 			break;
 			
-		case 5:	
+		case 6:	
 			//Invoking Test Case 5:	
 			profileSetUpPasswordEmpty();
 			break;
 			
-		case 6:	
+		case 7:	
 			//Invoking Test Case 6:				
 			profileSetUpCorrect();
 			break;
 			
-		case 7:	
+		case 8:	
 			//Invoking Test Case 7:			
 			profileEditViewSetUp();
 			break;
@@ -164,7 +168,43 @@ public class Mate1TC01 {
 
 	}
   
-  // Test Case 4: Email Field Empty - Error
+//Test Case 4: Illegal characters in Email Address - Error
+  private void profileSetUpEmailAlpha() throws InterruptedException {
+		
+		profilePage1();
+		driver.findElement(By.id("nickName")).click();
+		driver.findElement(By.id("nickName")).clear();
+		driver.findElement(By.id("nickName")).sendKeys("Neel");
+		
+		new Select(driver.findElement(By.id("DOBMonth"))).selectByVisibleText("January");
+	    driver.findElement(By.cssSelector("option[value=\"01\"]")).click();
+	    new Select(driver.findElement(By.id("DOBDay"))).selectByVisibleText("04");
+	    driver.findElement(By.cssSelector("#DOBDay > option[value=\"02\"]")).click();
+	    new Select(driver.findElement(By.id("DOBYear"))).selectByVisibleText("1994");
+	    driver.findElement(By.cssSelector("option[value=\"1994\"]")).click();
+		
+		driver.findElement(By.id("email")).click();
+		driver.findElement(By.id("email")).clear();
+		driver.findElement(By.id("email")).sendKeys("abc+2@def.com");
+		
+		driver.findElement(By.id("emailConfirmation")).click();
+		driver.findElement(By.id("emailConfirmation")).clear();
+		driver.findElement(By.id("emailConfirmation")).sendKeys("dilli@def.com");
+			
+		driver.findElement(By.id("password")).click();
+		driver.findElement(By.id("password")).clear();
+		driver.findElement(By.id("password")).sendKeys("abcd");
+		
+		Thread.sleep(3000);
+		
+		driver.findElement(By.cssSelector("input.submitButton.green")).click();
+		Thread.sleep(3000);
+		System.out.println("ERROR: Email Address contains illegal characters");
+
+
+	}
+  
+  // Test Case 5: Email Field Empty - Error
   private void profileSetUpEmailEmpty() throws InterruptedException {
 		profilePage1();
 		driver.findElement(By.id("nickName")).click();
@@ -197,7 +237,7 @@ public class Mate1TC01 {
 
 	}
   
-  //Test Case 5: Password Empty - Error
+  //Test Case 6: Password Empty - Error
   private void profileSetUpPasswordEmpty() throws InterruptedException {
 		
 		profilePage1();
@@ -232,7 +272,7 @@ public class Mate1TC01 {
 
 	}
   
-  // Test Case 6: Postal Code, Title, Education Empty: ERROR
+  // Test Case 7: Postal Code, Title, Education Empty: ERROR
   private void profileSetUpCorrect() throws InterruptedException {
 	    profilePage1();
 		driver.findElement(By.id("nickName")).click();
@@ -323,7 +363,7 @@ public class Mate1TC01 {
 	}
   
  
-// Test Case 7: Validating the view and edit profile - Changing fields in mini-profile to see the changes displayed
+// Test Case 8: Validating the view and edit profile - Changing fields in mini-profile to see the changes displayed
   private void profileEditViewSetUp() throws InterruptedException {
 	  	profilePage1();
 	  	String emailShuffled = shuffleEmail(email);
