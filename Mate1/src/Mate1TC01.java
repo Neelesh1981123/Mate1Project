@@ -36,7 +36,7 @@ public class Mate1TC01 {
   public void testSetUp() throws Exception {	
 	  	 
 	driver.get(baseUrl + "/"); 
-	int TestCase = 1; //Flip the TestCase numbers to run a particular test case at a time
+	int TestCase = 2; //Flip the TestCase numbers to run a particular test case at a time
 	switch(TestCase){
 	
 		case 1:
@@ -549,6 +549,8 @@ private void profilePage1() throws InterruptedException {
 	    new Select(driver.findElement(By.id("profileLookingMaxAge"))).selectByVisibleText("36");
 	    driver.findElement(By.cssSelector("#profileLookingMaxAge > option[value=\"36\"]")).click();
 	    driver.findElement(By.cssSelector("#country > option[value=\"39\"]")).click();
+	    driver.findElement(By.id(("postalCode"))).click();
+	    driver.findElement(By.id(("postalCode"))).clear();
 	    driver.findElement(By.id(("postalCode"))).sendKeys("H3S1H4");
 	    driver.findElement(By.id("submit")).click();
         Thread.sleep(5000);
